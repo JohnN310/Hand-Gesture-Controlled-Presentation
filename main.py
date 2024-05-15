@@ -12,7 +12,7 @@ buttonPressed = False
 buttonCounter = 0
 buttonDelay = 30
 annotations = [[]]
-annotationNumber = 0
+annotationNumber = -1
 annotationStart = False
 
 
@@ -56,31 +56,29 @@ while True:
         yVal = int(np.interp(lmList[8][1], [150, height - 150], [0, height]))
 
         if cy <= gestureThreshold:
-            annotationStart = False
             #Gesture 1 - left
             if fingers == [1, 0, 0, 0, 0]:
-                annotationStart = False
                 print("Left")
+                buttonPressed = True
                 if imageNumber > 0:
                     annotations = [[]]
-                    annotationNumber = 0
-                    buttonPressed = True
+                    annotationNumber = -1
                     imageNumber -= 1
+                    annotationStart = False
 
              #Gesture 2 - right
             if fingers == [0, 0, 0, 0, 1]:
-                annotationStart = False
                 print("right")
+                buttonPressed = True
                 if imageNumber < len(pathImages) - 1: 
                     annotations = [[]]
-                    annotationNumber = 0
-                    buttonPressed = True
+                    annotationNumber = -1
                     imageNumber += 1
+                    annotationStart = False
 
          #Gesture 3 - pointer    
         if fingers == [0, 1, 0, 0, 0]:
             cv2.circle(imgCurrent, indexFinger, 12, (0,0,255), cv2.FILLED)
-            annotationStart = False
         
          #Gesture 4 - draw    
         if fingers == [0, 1, 1, 0, 0]:
@@ -95,11 +93,13 @@ while True:
 
         #gesture 5 - erase
         if fingers == [0, 1, 1, 1, 0]:
+            print("Erase")
+            print(annotationNumber)
             if annotations:
-                if annotationNumber >= 0:
-                    annotations.pop(-1)
-                    annotationNumber -= 1
-                    buttonPressed = True
+                # if annotationNumber >= 0:
+                annotations.pop(-1)
+                annotationNumber -= 1
+                buttonPressed = True
     else:
         annotationStart = False
 
