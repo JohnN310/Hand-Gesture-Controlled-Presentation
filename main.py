@@ -7,17 +7,31 @@ import numpy as np
 width, height = 1280, 720
 imageNumber = 0
 hs, ws = 120, 213
-gestureThreshold = 500
+gestureThreshold = 700
 buttonPressed = False
 buttonCounter = 0
-buttonDelay = 30
+buttonDelay = 10
 annotations = [[]]
 annotationNumber = -1
 annotationStart = False
 
+def select_folder():
+    root = tk.Tk()
+    root.withdraw()  # Hide the root window
 
-folderPath = "Hand-Gesture-Controlled-Presentation\Presentation"
-# camera set up
+    # Open the folder selection dialog
+    folder_path = filedialog.askdirectory(title="Select a Folder")
+    
+    if folder_path:  # If a folder was selected
+        print(f"Selected folder: {folder_path}")
+        return folder_path
+    else:
+        print("No folder selected")
+        return None
+
+folderPath = select_folder()
+
+# # camera set up
 cap = cv2.VideoCapture(0)
 cap.set(3, width)
 cap.set(4, height)
