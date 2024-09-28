@@ -3,6 +3,9 @@ import os
 from cvzone.HandTrackingModule import HandDetector
 import numpy as np
 
+import tkinter as tk
+from tkinter import filedialog
+
 #variables 
 width, height = 1280, 720
 imageNumber = 0
